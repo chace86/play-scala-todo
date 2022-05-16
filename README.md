@@ -29,6 +29,13 @@ Example Scala Play "todo list" application. Postgres will be used as the databas
 - Flyway Migrations
 - Disable Play Evolutions (if required)
 
+### Development
+
+- ScalaStyle
+- ScalaCheck
+- Scala Steward - update dependencies
+- Add GitHub tags for build coverage, pass/fail, etc.
+
 ### Deployment
 
 - Dockerfile

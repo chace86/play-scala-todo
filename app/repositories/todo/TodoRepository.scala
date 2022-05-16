@@ -16,7 +16,7 @@ class TodoRepository @Inject() (dbConfigProvider: DatabaseConfigProvider)(implic
   import dbConfig._
   import profile.api._
 
-  private class TodoTable(tag: Tag) extends Table[Todo](tag, "todo") {
+  private class TodoTable(tag: Tag) extends Table[Todo](tag, "todos") {
 
     def id = column[Long]("id", O.PrimaryKey, O.AutoInc)
 
