@@ -13,7 +13,7 @@ import play.api.test._
  */
 class TodoControllerSpec extends PlaySpec with GuiceOneAppPerTest with Injecting {
 
-  "HomeController GET" should {
+  "TodoController GET" should {
 
     "render the index page from a new instance of controller" in {
       val controller = new TodoController(stubControllerComponents())
