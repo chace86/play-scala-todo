@@ -9,7 +9,6 @@ import repositories.todo.TodoRepository
 
 import scala.concurrent.ExecutionContext
 
-// TODO: need to add logging
 class TodoController @Inject()(repo: TodoRepository, cc: ControllerComponents)(implicit ec: ExecutionContext)
   extends AbstractController(cc) {
 
