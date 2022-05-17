@@ -27,7 +27,7 @@ Example Scala Play "todo list" application. Postgres will be used as the databas
   - Configuration
 - Postgres
 - Flyway Migrations
-- Disable Play Evolutions (if required)
+- Generate tables from Slick?
 
 ### Development
 
