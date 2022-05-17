@@ -3,8 +3,9 @@
 # https://www.playframework.com/documentation/latest/ScalaRouting
 # ~~~~
 
-# An example controller showing a sample home page
+# todo apis
+# ?= designates default value for query parameter
+POST    /todo               controllers.todo.TodoController.create(description: String, isCompleted: Boolean ?= false)
+PUT     /todo/:id           controllers.todo.TodoController.update(id: Long, description: Option[String], isCompleted: Option[Boolean])
 GET     /todo/:id           controllers.todo.TodoController.findById(id: Long)
-
-# Map static resources from the /public folder to the /assets URL path
-GET     /assets/*file       controllers.Assets.versioned(path="/public", file: Asset)
+DELETE  /todo/:id           controllers.todo.TodoController.delete(id: Long)

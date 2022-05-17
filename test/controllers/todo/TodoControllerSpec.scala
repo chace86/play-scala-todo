@@ -14,10 +14,10 @@ import scala.concurrent.Future
 // https://www.playframework.com/documentation/latest/ScalaTestingWithScalaTest
 class TodoControllerSpec extends PlaySpec with MockFactory {
 
-  val ID = 1
-  val todo: Todo = Todo(ID, "hello", isCompleted = false)
+  private val ID = 1
+  private val todo = Todo(ID, "hello", isCompleted = false)
 
-  val mockRepository: TodoRepository = mock[TodoRepository]
+  private val mockRepository = mock[TodoRepository]
 
   "TodoController GET" should {
 
