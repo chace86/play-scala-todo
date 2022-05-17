@@ -1,45 +1,55 @@
 package controllers.todo
 
+import models.todo.Todo
+import org.scalamock.scalatest.MockFactory
 import org.scalatestplus.play._
-import org.scalatestplus.play.guice._
+import play.api.libs.json.Json
 import play.api.test.Helpers._
 import play.api.test._
+import repositories.todo.TodoRepository
 
-/**
- * Add your spec here.
- * You can mock out a whole application including requests, plugins etc.
- *
- * For more information, see https://www.playframework.com/documentation/latest/ScalaTestingWithScalaTest
- */
-class TodoControllerSpec extends PlaySpec with GuiceOneAppPerTest with Injecting {
+import scala.concurrent.ExecutionContext.Implicits.global
+import scala.concurrent.Future
+
+// https://www.playframework.com/documentation/latest/ScalaTestingWithScalaTest
+class TodoControllerSpec extends PlaySpec with MockFactory {
+
+  val ID = 1
+  val todo: Todo = Todo(ID, "hello", isCompleted = false)
+
+  val mockRepository: TodoRepository = mock[TodoRepository]
 
   "TodoController GET" should {
 
-    "render the index page from a new instance of controller" in {
-      val controller = new TodoController(stubControllerComponents())
-      val home = controller.index().apply(FakeRequest(GET, "/"))
+    "return Ok and todo data if id exists" in {
+      (mockRepository.findById _).expects(ID)
+        .returning(Future.successful(Some(todo)))
 
-      status(home) mustBe OK
-      contentType(home) mustBe Some("text/html")
-      contentAsString(home) must include ("Welcome to Play")
+      val controller = new TodoController(mockRepository, Helpers.stubControllerComponents())
+      val result = controller.findById(ID).apply(FakeRequest(GET, "/todo"))
+
+      status(result) must equal(OK)
+      contentAsJson(result) must equal(Json.toJson(todo))
     }
 
-    "render the index page from the application" in {
-      val controller = inject[TodoController]
-      val home = controller.index().apply(FakeRequest(GET, "/"))
+    "return NotFound if id does not exist" in {
+      (mockRepository.findById _).expects(2)
+        .returning(Future.successful(None))
 
-      status(home) mustBe OK
-      contentType(home) mustBe Some("text/html")
-      contentAsString(home) must include ("Welcome to Play")
+      val controller = new TodoController(mockRepository, Helpers.stubControllerComponents())
+      val result = controller.findById(2).apply(FakeRequest(GET, "/todo"))
+
+      status(result) must equal(NOT_FOUND)
     }
 
-    "render the index page from the router" in {
-      val request = FakeRequest(GET, "/")
-      val home = route(app, request).get
+    "return InternalServerError if data source fails" in {
+      (mockRepository.findById _).expects(ID)
+        .returning(Future.failed(new Exception("Test failure")))
 
-      status(home) mustBe OK
-      contentType(home) mustBe Some("text/html")
-      contentAsString(home) must include ("Welcome to Play")
+      val controller = new TodoController(mockRepository, Helpers.stubControllerComponents())
+      val result = controller.findById(ID).apply(FakeRequest(GET, "/todo"))
+
+      status(result) must equal(INTERNAL_SERVER_ERROR)
     }
   }
 }
