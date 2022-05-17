@@ -39,6 +39,7 @@ class TodoRepository @Inject()(protected val dbConfigProvider: DatabaseConfigPro
   }.map(_.id) // return new id
 
   def update(id: Long, description: Option[String], isCompleted: Option[Boolean]): Future[Int] = {
+    // default to existing values in the case that description or isCompleted is None
     val action = todos
       .filter(_.id === id)
       .result.headOption
