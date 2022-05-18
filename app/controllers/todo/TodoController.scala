@@ -1,11 +1,11 @@
 package controllers.todo
 
 import javax.inject._
+import models.todo.TodoRepository
 
 import play.api.Logger
 import play.api.libs.json.Json
 import play.api.mvc._
-import repositories.todo.TodoRepository
 
 import scala.concurrent.ExecutionContext
 

@@ -1,8 +1,7 @@
-package repositories.todo
+package models.todo
 
 import javax.inject.{Inject, Singleton}
 
-import models.todo.Todo
 import play.api.db.slick.{DatabaseConfigProvider, HasDatabaseConfigProvider}
 import slick.jdbc.JdbcProfile
 
@@ -47,12 +46,10 @@ class TodoRepository @Inject()(protected val dbConfigProvider: DatabaseConfigPro
         case Some(existing) =>
           val finalDescription = description.getOrElse(existing.description)
           val finalCompleted = isCompleted.getOrElse(existing.isCompleted)
-          val todo = Todo(id, finalDescription, finalCompleted)
-          todos.update(todo)
-
+          todos.update(Todo(id, finalDescription, finalCompleted))
         case None => DBIO.successful(0)
       }
-
+    // return number of rows updated
     db.run(action)
   }
 

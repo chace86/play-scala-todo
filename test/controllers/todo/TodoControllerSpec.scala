@@ -1,12 +1,11 @@
 package controllers.todo
 
-import models.todo.Todo
+import models.todo.{Todo, TodoRepository}
 import org.scalamock.scalatest.MockFactory
 import org.scalatestplus.play._
 import play.api.libs.json.Json
 import play.api.test.Helpers._
 import play.api.test._
-import repositories.todo.TodoRepository
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
