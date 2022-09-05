@@ -24,8 +24,6 @@ class TodoRepository @Inject()(protected val dbConfigProvider: DatabaseConfigPro
 
   private val todos = TableQuery[TodoTable]
 
-  def findById(id: Long): Future[Option[Todo]] = db.run(todos.filter(_.id === id).result.headOption)
-
   // cannot insert auto-increment columns like id
   def create(description: String, isCompleted: Boolean): Future[Long] = db.run {
     todos
@@ -37,6 +35,7 @@ class TodoRepository @Inject()(protected val dbConfigProvider: DatabaseConfigPro
       .into((data, id) => Todo(id, data._1, data._2)) += (description, isCompleted)
   }.map(_.id) // return new id
 
+  // return number of rows updated
   def update(id: Long, description: Option[String], isCompleted: Option[Boolean]): Future[Int] = {
     // default to existing values in the case that description or isCompleted is None
     val action = todos
@@ -49,10 +48,12 @@ class TodoRepository @Inject()(protected val dbConfigProvider: DatabaseConfigPro
           todos.update(Todo(id, finalDescription, finalCompleted))
         case None => DBIO.successful(0)
       }
-    // return number of rows updated
+
     db.run(action)
   }
 
-  def delete(id: Long): Future[Int] =
-    db.run(todos.filter(_.id === id).delete) // return number of rows deleted
+  def findById(id: Long): Future[Option[Todo]] = db.run(todos.filter(_.id === id).result.headOption)
+
+  // return number of rows deleted
+  def delete(id: Long): Future[Int] = db.run(todos.filter(_.id === id).delete)
 }
