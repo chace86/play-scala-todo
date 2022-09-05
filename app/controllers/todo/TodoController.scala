@@ -1,11 +1,11 @@
 package controllers.todo
 
 import javax.inject._
-import models.todo.TodoRepository
 
 import play.api.Logger
 import play.api.libs.json.Json
 import play.api.mvc._
+import repositories.todo.TodoRepository
 
 import scala.concurrent.ExecutionContext
 
@@ -15,7 +15,6 @@ class TodoController @Inject()(repository: TodoRepository, cc: ControllerCompone
   private val logger = Logger(getClass)
 
   def create(description: String, isCompleted: Boolean): Action[AnyContent] = Action.async { implicit request =>
-    // TODO: test what happens if conflict?
     repository.create(description, isCompleted)
       .map(id => Created(request.path + s"/$id"))
       .recover { case ex =>

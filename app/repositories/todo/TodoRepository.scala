@@ -1,4 +1,4 @@
-package models.todo
+package repositories.todo
 
 import javax.inject.{Inject, Singleton}
 
