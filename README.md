@@ -8,36 +8,35 @@ Example Scala Play "todo list" application. Postgres will be used as the databas
 
 ### Application
 
-- Controller
-- Model
-- Repository
-- Auth
-- Testing
+- [x] Controller
+- [x] Model
+- [x] Repository
+- [ ] Auth
+- [x] Testing
   - Unit tests
-  - Integration tests
-  - e2e tests
-- How to deal with blocking IO?
-- AWS SDK - Use [AWScala](https://github.com/seratch/AWScala)?
+  - Integration/e2e tests
+- [ ] How to deal with blocking IO?
+- [ ] AWS SDK - Use [AWScala](https://github.com/seratch/AWScala)?
+- [ ] Swagger/OpenAP
 
 ### Database
 
-- Use H2 initially
-- Slick
+- [x] Use H2 initially
+- [x] Slick
   - Represent table
   - Configuration
-- Postgres
-- Flyway Migrations
-- Generate tables from Slick?
+- [ ] Postgres
+- [x] Flyway Migrations
 
 ### Development
 
-- ScalaStyle
-- ScalaCheck
-- Scala Steward - update dependencies
-- Add GitHub tags for build coverage, pass/fail, etc.
+- [ ] ScalaStyle
+- [ ] ScalaCheck
+- [ ] Scala Steward - update dependencies
+- [ ] Add GitHub tags for build coverage, pass/fail, etc.
 
 ### Deployment
 
-- Dockerfile
-- docker-compose
-- CF: AWS Elastic Beanstalk?
+- [ ] Dockerfile
+- [ ] docker-compose
+- [ ] CF: AWS Elastic Beanstalk?
