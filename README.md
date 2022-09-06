@@ -13,8 +13,8 @@ Example Scala Play "todo list" application. Postgres will be used as the databas
 - [x] Repository
 - [ ] Auth
 - [x] Testing
-  - Unit tests
-  - Integration/e2e tests
+    - Unit tests
+    - Integration/e2e tests
 - [ ] How to deal with blocking IO?
 - [ ] AWS SDK - Use [AWScala](https://github.com/seratch/AWScala)?
 - [ ] Swagger/OpenAP
@@ -23,14 +23,14 @@ Example Scala Play "todo list" application. Postgres will be used as the databas
 
 - [x] Use H2 initially
 - [x] Slick
-  - Represent table
-  - Configuration
+    - Represent table
+    - Configuration
 - [ ] Postgres
 - [x] Flyway Migrations
 
 ### Development
 
-- [ ] ScalaStyle
+- [x] Scalafmt
 - [ ] ScalaCheck
 - [ ] Scala Steward - update dependencies
 - [ ] Add GitHub tags for build coverage, pass/fail, etc.

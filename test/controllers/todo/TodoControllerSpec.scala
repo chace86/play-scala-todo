@@ -14,7 +14,7 @@ import scala.concurrent.Future
 // https://www.playframework.com/documentation/latest/ScalaTestingWithScalaTest
 class TodoControllerSpec extends PlaySpec with MockFactory {
 
-  private val ID = 1
+  private val ID   = 1
   private val todo = Todo(ID, "hello", isCompleted = false)
   private val path = "/todo"
 
@@ -69,7 +69,7 @@ class TodoControllerSpec extends PlaySpec with MockFactory {
         .returning(Future.failed(new Exception("Test failure")))
 
       val result = controller.create("", isCompleted = true).apply(FakeRequest(POST, path))
-      status(result) must be (INTERNAL_SERVER_ERROR)
+      status(result) must be(INTERNAL_SERVER_ERROR)
     }
   }
 

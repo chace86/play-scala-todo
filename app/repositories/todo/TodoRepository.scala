@@ -8,14 +8,14 @@ import slick.jdbc.JdbcProfile
 import scala.concurrent.{ExecutionContext, Future}
 
 @Singleton
-class TodoRepository @Inject()(protected val dbConfigProvider: DatabaseConfigProvider)(implicit ec: ExecutionContext)
-  extends HasDatabaseConfigProvider[JdbcProfile] {
+class TodoRepository @Inject() (protected val dbConfigProvider: DatabaseConfigProvider)(implicit ec: ExecutionContext)
+    extends HasDatabaseConfigProvider[JdbcProfile] {
 
   import profile.api._
 
   private class TodoTable(tag: Tag) extends Table[Todo](tag, "todos") {
 
-    def id = column[Long]("id", O.PrimaryKey, O.AutoInc)
+    def id          = column[Long]("id", O.PrimaryKey, O.AutoInc)
     def description = column[String]("description")
     def isCompleted = column[Boolean]("is_completed")
 
@@ -42,12 +42,13 @@ class TodoRepository @Inject()(protected val dbConfigProvider: DatabaseConfigPro
       .filter(_.id === id)
       .result.headOption
       .flatMap {
-        case Some(existing) => todos
-          .map(t => (t.description, t.isCompleted))
-          .update(
-            description.getOrElse(existing.description),
-            isCompleted.getOrElse(existing.isCompleted)
-          )
+        case Some(existing) =>
+          todos
+            .map(t => (t.description, t.isCompleted))
+            .update(
+              description.getOrElse(existing.description),
+              isCompleted.getOrElse(existing.isCompleted)
+            )
         case None => DBIO.successful(0)
       }
 

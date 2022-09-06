@@ -9,8 +9,8 @@ import repositories.todo.TodoRepository
 
 import scala.concurrent.ExecutionContext
 
-class TodoController @Inject()(repository: TodoRepository, cc: ControllerComponents)(implicit ec: ExecutionContext)
-  extends AbstractController(cc) {
+class TodoController @Inject() (repository: TodoRepository, cc: ControllerComponents)(implicit ec: ExecutionContext)
+    extends AbstractController(cc) {
 
   private val logger = Logger(getClass)
 
@@ -27,7 +27,8 @@ class TodoController @Inject()(repository: TodoRepository, cc: ControllerCompone
     repository.update(id, description, isCompleted)
       .map(n =>
         if (n > 0) Ok(Json.obj("message" -> s"Updated $n rows"))
-        else       NotFound(Json.obj("error" -> s"ID $id not found")))
+        else NotFound(Json.obj("error" -> s"ID $id not found"))
+      )
       .recover { case ex =>
         logger.error(s"Failed to update resource", ex)
         InternalServerError(Json.obj("error" -> s"Failed to update resource"))
@@ -48,7 +49,8 @@ class TodoController @Inject()(repository: TodoRepository, cc: ControllerCompone
     repository.delete(id)
       .map(n =>
         if (n > 0) Ok(Json.obj("message" -> s"Deleted $n rows"))
-        else       NotFound(Json.obj("error" -> s"ID $id not found")))
+        else NotFound(Json.obj("error" -> s"ID $id not found"))
+      )
       .recover { case ex =>
         logger.error(s"Failed to delete resource", ex)
         InternalServerError(Json.obj("error" -> s"Failed to delete resource"))
