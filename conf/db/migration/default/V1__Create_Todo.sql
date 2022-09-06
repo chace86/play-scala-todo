@@ -4,6 +4,6 @@ CREATE TABLE todos (
   is_completed BOOLEAN NOT NULL DEFAULT FALSE
 );
 
-INSERT INTO todos (id, description, is_completed) VALUES (1, 'shirt', false);
-INSERT INTO todos (id, description, is_completed) VALUES (2, 'watch', true);
-INSERT INTO todos (id, description, is_completed) VALUES (3, 'shoes', false);
+INSERT INTO todos (description, is_completed) VALUES ('shirt', false);
+INSERT INTO todos (description, is_completed) VALUES ('watch', true);
+INSERT INTO todos (description, is_completed) VALUES ('shoes', false);

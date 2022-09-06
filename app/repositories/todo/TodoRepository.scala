@@ -38,18 +38,20 @@ class TodoRepository @Inject()(protected val dbConfigProvider: DatabaseConfigPro
   // return number of rows updated
   def update(id: Long, description: Option[String], isCompleted: Option[Boolean]): Future[Int] = {
     // default to existing values in the case that description or isCompleted is None
-    val action = todos
+    val updateAction = todos
       .filter(_.id === id)
       .result.headOption
       .flatMap {
-        case Some(existing) =>
-          val finalDescription = description.getOrElse(existing.description)
-          val finalCompleted = isCompleted.getOrElse(existing.isCompleted)
-          todos.update(Todo(id, finalDescription, finalCompleted))
+        case Some(existing) => todos
+          .map(t => (t.description, t.isCompleted))
+          .update(
+            description.getOrElse(existing.description),
+            isCompleted.getOrElse(existing.isCompleted)
+          )
         case None => DBIO.successful(0)
       }
 
-    db.run(action)
+    db.run(updateAction)
   }
 
   def findById(id: Long): Future[Option[Todo]] = db.run(todos.filter(_.id === id).result.headOption)
