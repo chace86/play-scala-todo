@@ -31,7 +31,6 @@ Example Scala Play "todo list" application. Postgres will be used as the databas
 ### Development
 
 - [x] Scalafmt
-- [ ] ScalaCheck
 - [ ] Scala Steward - update dependencies
 - [ ] Add GitHub tags for build coverage, pass/fail, etc.
 
