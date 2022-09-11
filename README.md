@@ -19,8 +19,9 @@ Example Scala Play "todo list" application. Postgres will be used as the databas
 - [ ] Integration vs unit test sbt tasks
 - [ ] How to deal with blocking IO?
 - [ ] AWS SDK? - Use [AWScala](https://github.com/seratch/AWScala)?
-- [ ] Swagger/OpenAPI
+- [x] Swagger/OpenAPI
 - [ ] Pagination API example?
+- [ ] Enum rendered in Swagger?
 
 ### Database
 

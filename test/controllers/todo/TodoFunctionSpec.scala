@@ -1,10 +1,10 @@
 package controllers.todo
 
+import models.todo.Todo
 import org.scalatestplus.play.PlaySpec
 import org.scalatestplus.play.guice.GuiceOneAppPerSuite
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
-import repositories.todo.Todo
 
 class TodoFunctionSpec extends PlaySpec with GuiceOneAppPerSuite {
 

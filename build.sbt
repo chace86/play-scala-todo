@@ -17,5 +17,5 @@ libraryDependencies += "org.webjars"             % "swagger-ui"         % "4.14.
 
 // Play Swagger settings
 swaggerPrettyJson       := true
-swaggerDomainNameSpaces := Seq("repositories.todo")
 swaggerV3               := true
+swaggerDomainNameSpaces := Seq("models")

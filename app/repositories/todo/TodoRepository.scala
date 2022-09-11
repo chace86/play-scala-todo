@@ -3,6 +3,7 @@ package repositories.todo
 import javax.inject.Inject
 import javax.inject.Singleton
 
+import models.todo.Todo
 import play.api.db.slick.DatabaseConfigProvider
 import play.api.db.slick.HasDatabaseConfigProvider
 import slick.jdbc.JdbcProfile
