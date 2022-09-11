@@ -14,7 +14,7 @@ class TodoController @Inject() (repository: TodoRepository, cc: ControllerCompon
 
   private val logger = Logger(getClass)
 
-  def create(description: String, isCompleted: Boolean): Action[AnyContent] = Action.async { implicit request =>
+  def create(description: String, isCompleted: Boolean): Action[AnyContent] = Action.async { request =>
     repository.create(description, isCompleted)
       .map(id => Created(request.path + s"/$id"))
       .recover { case ex =>

@@ -1,11 +1,14 @@
 package repositories.todo
 
-import javax.inject.{Inject, Singleton}
+import javax.inject.Inject
+import javax.inject.Singleton
 
-import play.api.db.slick.{DatabaseConfigProvider, HasDatabaseConfigProvider}
+import play.api.db.slick.DatabaseConfigProvider
+import play.api.db.slick.HasDatabaseConfigProvider
 import slick.jdbc.JdbcProfile
 
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.ExecutionContext
+import scala.concurrent.Future
 
 @Singleton
 class TodoRepository @Inject() (protected val dbConfigProvider: DatabaseConfigProvider)(implicit ec: ExecutionContext)
@@ -44,6 +47,7 @@ class TodoRepository @Inject() (protected val dbConfigProvider: DatabaseConfigPr
       .flatMap {
         case Some(existing) =>
           todos
+            .filter(_.id === id)
             .map(t => (t.description, t.isCompleted))
             .update(
               description.getOrElse(existing.description),

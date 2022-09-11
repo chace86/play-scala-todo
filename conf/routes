@@ -5,7 +5,38 @@
 
 # todo apis
 # ?= designates default value for query parameter
-POST    /todo               controllers.todo.TodoController.create(description: String, isCompleted: Boolean ?= false)
-PUT     /todo/:id           controllers.todo.TodoController.update(id: Long, description: Option[String], isCompleted: Option[Boolean])
-GET     /todo/:id           controllers.todo.TodoController.findById(id: Long)
-DELETE  /todo/:id           controllers.todo.TodoController.delete(id: Long)
+POST    /todo                controllers.todo.TodoController.create(description: String, isCompleted: Boolean ?= false)
+
+###
+# tags:
+#   - Todo
+# responses:
+#   200:
+#     content:
+#       application/json:
+#         schema:
+#           type: object
+#           properties:
+#             message:
+#               type: string
+###
+PUT     /todo/:id            controllers.todo.TodoController.update(id: Long, description: Option[String], isCompleted: Option[Boolean])
+
+###
+# tags:
+#   - Todo
+# responses:
+#   200:
+#     content:
+#       application/json:
+#         schema:
+#           $ref: '#/components/schemas/repositories.todo.Todo'
+###
+GET     /todo/:id             controllers.todo.TodoController.findById(id: Long)
+DELETE  /todo/:id             controllers.todo.TodoController.delete(id: Long)
+
+### NoDocs ###
+GET    /docs/swagger-ui/*file controllers.Assets.at(path:String="/public/swagger", file:String)
+
+### NoDocs ###
+GET    /assets/*file          controllers.Assets.versioned(path="/public", file: Asset)
