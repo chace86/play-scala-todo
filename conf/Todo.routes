@@ -1,5 +1,5 @@
 
-# Swagger specific routes
+# Todo routes
 
 ###
 # responses:
@@ -52,6 +52,8 @@ GET /todo/:id controllers.todo.TodoController.findById(id: Long)
 #     $ref: '#/responses/InternalServerError'
 ###
 DELETE /todo/:id controllers.todo.TodoController.delete(id: Long)
+
+# Swagger specific routes
 
 ### NoDocs ###
 GET /docs/swagger-ui/*file controllers.Assets.at(path:String="/public/swagger", file:String)
