@@ -13,7 +13,6 @@ libraryDependencies += "org.flywaydb"           %% "flyway-play"        % "7.20.
 libraryDependencies += "com.h2database"          % "h2"                 % "2.1.210"
 libraryDependencies += "org.scalatestplus.play" %% "scalatestplus-play" % "5.1.0" % Test
 libraryDependencies += "org.scalamock"          %% "scalamock"          % "5.2.0" % Test
-libraryDependencies += "org.webjars"             % "swagger-ui"         % "4.14.0"
 
 // Play Swagger settings
 swaggerPrettyJson       := true
