@@ -2,8 +2,6 @@ openapi: 3.0.0
 info:
   title: Todo API
   description: Endpoints for managing todos and todo lists
-tags:
-  - Todo
 responses:
   OkResponse:
     description: Successful response
