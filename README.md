@@ -31,8 +31,8 @@ Example Scala Play "todo list" application. Postgres will be used as the databas
     - Configuration
 - [ ] Postgres
 - [x] Flyway Migrations
-- Slick - FK constraint with todo lists
-- Slick - Add optional column
+- [ ] Slick - FK constraint with todo lists
+- [ ] Slick - Add optional column
 
 ### Development
 
