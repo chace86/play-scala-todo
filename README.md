@@ -18,10 +18,12 @@ Example Scala Play "todo list" application. Postgres will be used as the databas
     - Integration/e2e tests
 - [ ] Integration vs unit test sbt tasks
 - [ ] How to deal with blocking IO?
-- [ ] AWS SDK? - Use [AWScala](https://github.com/seratch/AWScala)?
+- [ ] AWS SDK for Java
 - [x] Swagger/OpenAPI
 - [ ] Pagination API example?
 - [ ] Enum rendered in Swagger?
+- [ ] Update to Scala 2.13
+- [ ] JVM tuning and other java options?
 
 ### Database
 
@@ -46,6 +48,24 @@ Example Scala Play "todo list" application. Postgres will be used as the databas
 - [ ] docker-compose
 - [ ] CF: AWS Elastic Beanstalk?
 
-## Helpful Links
+## Docker
+
+Play comes with [SBT Native Packager](https://sbt-native-packager.readthedocs.io/en/latest/index.html), which can build a Docker image
+
+To build Docker image:
+
+`sbt docker:publishLocal`
+
+To run image locally:
+
+`docker run --rm -p 9000:9000 play-scala-todo`
+
+## Testing
+
+`sbt test`
+
+## Resources
 
 - [Play Swagger](https://github.com/iheartradio/play-swagger)
+- [Play Samples](https://github.com/playframework/play-samples) - REST, Slick, etc.
+- [SBT Native Packager](https://sbt-native-packager.readthedocs.io/en/latest/index.html)
