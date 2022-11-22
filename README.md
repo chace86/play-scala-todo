@@ -48,7 +48,17 @@ Example Scala Play "todo list" application. Postgres will be used as the databas
 - [ ] docker-compose
 - [ ] CF: AWS Elastic Beanstalk?
 
-## Docker
+## Run Application
+
+### Local
+
+To run locally:
+
+`sbt run`
+
+Use `CTRL + D` to stop application
+
+### Docker
 
 Play comes with [SBT Native Packager](https://sbt-native-packager.readthedocs.io/en/latest/index.html), which can build a Docker image
 
@@ -64,8 +74,14 @@ To run image locally:
 
 `sbt test`
 
+## Swagger
+
+- SwaggerUI at `http://localhost:9000/docs/swagger-ui/index.html?url=/assets/swagger.json`
+- Swagger JSON at `localhost:9000/assets/swagger.json` 
+
 ## Resources
 
 - [Play Swagger](https://github.com/iheartradio/play-swagger)
 - [Play Samples](https://github.com/playframework/play-samples) - REST, Slick, etc.
 - [SBT Native Packager](https://sbt-native-packager.readthedocs.io/en/latest/index.html)
+- [OpenAPI/Swagger Specification](https://swagger.io/specification/)
