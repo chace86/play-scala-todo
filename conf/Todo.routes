@@ -53,6 +53,20 @@ GET /todo/:id controllers.todo.TodoController.findById(id: Long)
 ###
 DELETE /todo/:id controllers.todo.TodoController.delete(id: Long)
 
+# Example routes
+
+###
+# responses:
+#   200:
+#     content:
+#       application/json:
+#         schema:
+#           $ref: '#/components/schemas/models.example.Example'
+#   500:
+#     $ref: '#/responses/InternalServerError'
+###
+GET /example controllers.example.ExampleController.example
+
 # Swagger specific routes
 
 ### NoDocs ###
