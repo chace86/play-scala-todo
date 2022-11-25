@@ -21,7 +21,7 @@ Example Scala Play "todo list" application. Postgres will be used as the databas
 - [ ] AWS SDK for Java
 - [x] Swagger/OpenAPI
 - [ ] Pagination API example?
-- [ ] Enum rendered in Swagger?
+- [x] Enum rendered in Swagger?
 - [ ] Update to Scala 2.13
 - [ ] JVM tuning and other java options?
 

@@ -16,13 +16,14 @@ class TodoController @Inject() (repository: TodoRepository, cc: ControllerCompon
 
   private val logger = Logger(getClass)
 
-  def create(description: String, isCompleted: Boolean): Action[AnyContent] = Action.async { request =>
-    repository.create(description, isCompleted)
-      .map(id => Created(request.path + s"/$id"))
-      .recover { case ex =>
-        logger.error(s"Failed to create resource", ex)
-        InternalServerError(Json.toJson(ErrorResponse(s"Failed to create resource")))
-      }
+  def create(description: String, isCompleted: Boolean, todoListId: Long): Action[AnyContent] = Action.async {
+    request =>
+      repository.create(description, isCompleted, todoListId)
+        .map(id => Created(request.path + s"/$id"))
+        .recover { case ex =>
+          logger.error(s"Failed to create resource", ex)
+          InternalServerError(Json.toJson(ErrorResponse(s"Failed to create resource")))
+        }
   }
 
   def update(id: Long, description: Option[String], isCompleted: Option[Boolean]): Action[AnyContent] = Action.async {
