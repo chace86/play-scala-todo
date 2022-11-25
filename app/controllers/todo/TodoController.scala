@@ -4,7 +4,7 @@ import javax.inject._
 
 import models.response.ErrorResponse
 import models.response.MessageResponse
-import play.api.Logger
+import play.api.Logging
 import play.api.libs.json.Json
 import play.api.mvc._
 import repositories.todo.TodoRepository
@@ -12,17 +12,16 @@ import repositories.todo.TodoRepository
 import scala.concurrent.ExecutionContext
 
 class TodoController @Inject() (repository: TodoRepository, cc: ControllerComponents)(implicit ec: ExecutionContext)
-    extends AbstractController(cc) {
-
-  private val logger = Logger(getClass)
+    extends AbstractController(cc)
+    with Logging {
 
   def create(description: String, isCompleted: Boolean, todoListId: Long): Action[AnyContent] = Action.async {
     request =>
       repository.create(description, isCompleted, todoListId)
         .map(id => Created(request.path + s"/$id"))
         .recover { case ex =>
-          logger.error(s"Failed to create resource", ex)
-          InternalServerError(Json.toJson(ErrorResponse(s"Failed to create resource")))
+          logger.error("Failed to create resource", ex)
+          InternalServerError(Json.toJson(ErrorResponse("Failed to create resource")))
         }
   }
 
