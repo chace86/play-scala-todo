@@ -5,29 +5,15 @@ import javax.inject.Singleton
 
 import models.todo.Todo
 import play.api.db.slick.DatabaseConfigProvider
-import play.api.db.slick.HasDatabaseConfigProvider
-import slick.jdbc.JdbcProfile
 
 import scala.concurrent.ExecutionContext
 import scala.concurrent.Future
 
 @Singleton
 class TodoRepository @Inject() (protected val dbConfigProvider: DatabaseConfigProvider)(implicit ec: ExecutionContext)
-    extends HasDatabaseConfigProvider[JdbcProfile] {
+    extends TodoComponent {
 
   import profile.api._
-
-  private class TodoTable(tag: Tag) extends Table[Todo](tag, "todo") {
-
-    def id          = column[Long]("id", O.PrimaryKey, O.AutoInc)
-    def description = column[String]("description")
-    def isCompleted = column[Boolean]("is_completed")
-    def todoListId  = column[Long]("todo_list_id")
-
-    override def * = (id, description, isCompleted, todoListId) <> ((Todo.apply _).tupled, Todo.unapply)
-  }
-
-  private val todos = TableQuery[TodoTable]
 
   // cannot insert auto-increment columns like id
   def create(description: String, isCompleted: Boolean, todoListId: Long): Future[Long] = db.run {
