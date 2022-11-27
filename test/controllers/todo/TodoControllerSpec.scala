@@ -15,10 +15,10 @@ import scala.concurrent.Future
 // https://www.playframework.com/documentation/latest/ScalaTestingWithScalaTest
 class TodoControllerSpec extends PlaySpec with MockFactory {
 
-  private val id         = 1
-  private val todoListId = 1
-  private val todo       = Todo(id, "hello", isCompleted = false, 1)
-  private val path       = "/todo"
+  private val id      = 1
+  private val todo    = Todo(Some(id), "hello", 1)
+  private val newTodo = todo.copy(id = None)
+  private val path    = "/todo"
 
   private val repository = mock[TodoRepository]
   private val controller = new TodoController(repository, Helpers.stubControllerComponents())
@@ -54,23 +54,27 @@ class TodoControllerSpec extends PlaySpec with MockFactory {
   "POST /todo" should {
 
     "return 201 when todo is created" in {
-      val description = "test-description"
-      val isCompleted = false
-      (repository.create _).expects(description, isCompleted, todoListId)
+      (repository.create _).expects(newTodo)
         .returning(Future.successful(1))
 
-      val result = controller.create(description, isCompleted, todoListId)
-        .apply(FakeRequest(POST, path))
+      val result = controller.create.apply(
+        FakeRequest(POST, path)
+          .withBody(Json.toJson(newTodo))
+      )
 
       status(result) must equal(CREATED)
       contentAsString(result) must equal(s"$path/$id")
     }
 
     "return 500 if data source fails" in {
-      (repository.create _).expects(*, *, *)
+      (repository.create _).expects(*)
         .returning(Future.failed(new Exception("Test failure")))
 
-      val result = controller.create("", isCompleted = true, todoListId).apply(FakeRequest(POST, path))
+      val result = controller.create().apply(
+        FakeRequest(POST, path)
+          .withBody(Json.toJson(todo))
+      )
+
       status(result) must be(INTERNAL_SERVER_ERROR)
     }
   }

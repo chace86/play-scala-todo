@@ -15,16 +15,13 @@ class TodoRepository @Inject() (protected val dbConfigProvider: DatabaseConfigPr
 
   import profile.api._
 
-  // cannot insert auto-increment columns like id
-  def create(description: String, isCompleted: Boolean, todoListId: Long): Future[Long] = db.run {
-    todos
-      // create projection of just description and completed status, since we are not inserting id
-      .map(t => (t.description, t.isCompleted, t.todoListId))
-      // define projection to return the id, to know what id is generated
-      .returning(todos.map(_.id))
-      // define transformation for the returned value, combines original params with new ones
-      .into((data, id) => Todo(id, data._1, data._2, data._3)) += (description, isCompleted, todoListId)
-  }.map(_.id) // return new id
+  // auto-increment id column is ignored
+  def create(todo: Todo): Future[Long] =
+    db.run(
+      todos
+        .map(t => (t.description, t.todoListId, t.isCompleted))
+        .returning(todos.map(_.id)) += (todo.description, todo.todoListId, todo.isCompleted.getOrElse(false))
+    )
 
   // return number of rows updated
   def update(id: Long, description: Option[String], isCompleted: Option[Boolean]): Future[Int] = {
@@ -39,7 +36,9 @@ class TodoRepository @Inject() (protected val dbConfigProvider: DatabaseConfigPr
             .map(t => (t.description, t.isCompleted))
             .update(
               description.getOrElse(existing.description),
-              isCompleted.getOrElse(existing.isCompleted)
+              isCompleted
+                .orElse(existing.isCompleted)
+                .getOrElse(false)
             )
         case None => DBIO.successful(0)
       }

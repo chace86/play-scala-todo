@@ -15,7 +15,7 @@
 #   500:
 #     $ref: '#/responses/InternalServerError'
 ###
-POST /todo controllers.todo.TodoController.create(description: String, isCompleted: Boolean ?= false, todoListId: Long)
+POST /todo controllers.todo.TodoController.create
 
 ###
 # responses:

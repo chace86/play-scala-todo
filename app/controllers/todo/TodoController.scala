@@ -4,25 +4,32 @@ import javax.inject._
 
 import models.response.ErrorResponse
 import models.response.MessageResponse
+import models.todo.Todo
 import play.api.Logging
+import play.api.libs.json.JsError
+import play.api.libs.json.JsValue
 import play.api.libs.json.Json
 import play.api.mvc._
 import repositories.todo.TodoRepository
 
 import scala.concurrent.ExecutionContext
+import scala.concurrent.Future
 
 class TodoController @Inject() (repository: TodoRepository, cc: ControllerComponents)(implicit ec: ExecutionContext)
     extends AbstractController(cc)
     with Logging {
 
-  def create(description: String, isCompleted: Boolean, todoListId: Long): Action[AnyContent] = Action.async {
-    request =>
-      repository.create(description, isCompleted, todoListId)
-        .map(id => Created(request.path + s"/$id"))
-        .recover { case ex =>
-          logger.error("Failed to create resource", ex)
-          InternalServerError(Json.toJson(ErrorResponse("Failed to create resource")))
-        }
+  def create: Action[JsValue] = Action(parse.json).async { request =>
+    request.body.validate[Todo]
+      .map(
+        repository.create(_)
+          .map(id => Created(request.path + s"/$id"))
+          .recover { case ex =>
+            logger.error("Failed to create resource", ex)
+            InternalServerError(Json.toJson(ErrorResponse("Failed to create resource")))
+          }
+      )
+      .recoverTotal(error => Future.successful(BadRequest(JsError.toJson(error))))
   }
 
   def update(id: Long, description: Option[String], isCompleted: Option[Boolean]): Action[AnyContent] = Action.async {

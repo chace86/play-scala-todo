@@ -11,15 +11,16 @@ trait TodoComponent extends HasDatabaseConfigProvider[JdbcProfile] with TodoList
 
     def id          = column[Long]("id", O.PrimaryKey, O.AutoInc)
     def description = column[String]("description")
-    def isCompleted = column[Boolean]("is_completed")
     def todoListId  = column[Long]("todo_list_id")
-    def todoList = foreignKey("todo_list_fk", todoListId, todoLists)(
+    def isCompleted = column[Boolean]("is_completed", O.Default(false))
+
+    override def * = (id.?, description, todoListId, isCompleted.?) <> ((Todo.apply _).tupled, Todo.unapply)
+
+    def todoListFk = foreignKey("todo_list_fk", todoListId, todoLists)(
       _.id,
       onUpdate = ForeignKeyAction.Restrict,
       onDelete = ForeignKeyAction.Cascade
     )
-
-    override def * = (id, description, isCompleted, todoListId) <> ((Todo.apply _).tupled, Todo.unapply)
   }
 
   val todos = TableQuery[TodoTable]
