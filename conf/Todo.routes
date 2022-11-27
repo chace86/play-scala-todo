@@ -2,6 +2,12 @@
 # Todo routes
 
 ###
+# requestBody:
+#   required: true
+#   content:
+#     application/json:
+#       schema:
+#         $ref: '#/components/schemas/models.todo.Todo'
 # responses:
 #   201:
 #     description: Resource created

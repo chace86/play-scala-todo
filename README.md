@@ -34,7 +34,7 @@ Example Scala Play "todo list" application. Postgres will be used as the databas
 - [ ] Postgres
 - [x] Flyway Migrations
 - [x] Slick - FK constraint with todo lists
-- [ ] Slick - Add optional column
+- [x] Slick - Add optional column
 
 ### Development
 
@@ -83,5 +83,6 @@ To run image locally:
 
 - [Play Swagger](https://github.com/iheartradio/play-swagger)
 - [Play Samples](https://github.com/playframework/play-samples) - REST, Slick, etc.
+- [Slick 3](https://scala-slick.org/doc/stable/)
 - [SBT Native Packager](https://sbt-native-packager.readthedocs.io/en/latest/index.html)
 - [OpenAPI/Swagger Specification](https://swagger.io/specification/)

@@ -7,7 +7,7 @@ import play.api.libs.json.Json
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
 
-class TodoFunctionSpec extends PlaySpec with GuiceOneAppPerSuite {
+class TodoFunSpec extends PlaySpec with GuiceOneAppPerSuite {
 
   private val id         = 1
   private val todoListId = 1
