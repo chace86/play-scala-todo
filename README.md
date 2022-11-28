@@ -23,6 +23,7 @@ Example Scala Play "todo list" application. Postgres will be used as the databas
 - [ ] Pagination API example?
 - [x] Enum rendered in Swagger?
 - [ ] Update to Scala 2.13
+- [ ] Update sbt version
 - [ ] JVM tuning and other java options?
 
 ### Database
