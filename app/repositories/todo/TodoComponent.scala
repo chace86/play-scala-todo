@@ -7,12 +7,14 @@ import slick.jdbc.PostgresProfile
 trait TodoComponent { self: HasDatabaseConfigProvider[PostgresProfile] with TodoListComponent =>
   import profile.api._
 
+  val CompletedDefault = false
+
   class TodoTable(tag: Tag) extends Table[Todo](tag, "todo") {
 
     def id          = column[Long]("id", O.PrimaryKey, O.AutoInc)
     def description = column[String]("description")
     def todoListId  = column[Long]("todo_list_id")
-    def isCompleted = column[Boolean]("is_completed", O.Default(false))
+    def isCompleted = column[Boolean]("is_completed", O.Default(CompletedDefault))
 
     override def * = (id.?, description, todoListId, isCompleted.?) <> ((Todo.apply _).tupled, Todo.unapply)
 

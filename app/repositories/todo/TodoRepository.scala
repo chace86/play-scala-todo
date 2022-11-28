@@ -24,7 +24,7 @@ class TodoRepository @Inject() (protected val dbConfigProvider: DatabaseConfigPr
     db.run(
       todos
         .map(t => (t.description, t.todoListId, t.isCompleted))
-        .returning(todos.map(_.id)) += (todo.description, todo.todoListId, todo.isCompleted.getOrElse(false))
+        .returning(todos.map(_.id)) += (todo.description, todo.todoListId, todo.isCompleted.getOrElse(CompletedDefault))
     )
 
   // return number of rows updated
@@ -42,7 +42,7 @@ class TodoRepository @Inject() (protected val dbConfigProvider: DatabaseConfigPr
               description.getOrElse(existing.description),
               isCompleted
                 .orElse(existing.isCompleted)
-                .getOrElse(false)
+                .getOrElse(CompletedDefault)
             )
         case None => DBIO.successful(0)
       }
