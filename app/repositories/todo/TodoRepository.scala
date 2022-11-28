@@ -5,13 +5,17 @@ import javax.inject.Singleton
 
 import models.todo.Todo
 import play.api.db.slick.DatabaseConfigProvider
+import play.api.db.slick.HasDatabaseConfigProvider
+import slick.jdbc.JdbcProfile
 
 import scala.concurrent.ExecutionContext
 import scala.concurrent.Future
 
 @Singleton
 class TodoRepository @Inject() (protected val dbConfigProvider: DatabaseConfigProvider)(implicit ec: ExecutionContext)
-    extends TodoComponent {
+    extends HasDatabaseConfigProvider[JdbcProfile]
+    with TodoComponent
+    with TodoListComponent {
 
   import profile.api._
 

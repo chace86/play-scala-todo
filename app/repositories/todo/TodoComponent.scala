@@ -4,7 +4,7 @@ import models.todo.Todo
 import play.api.db.slick.HasDatabaseConfigProvider
 import slick.jdbc.JdbcProfile
 
-trait TodoComponent extends HasDatabaseConfigProvider[JdbcProfile] with TodoListComponent {
+trait TodoComponent { self: HasDatabaseConfigProvider[JdbcProfile] with TodoListComponent =>
   import profile.api._
 
   class TodoTable(tag: Tag) extends Table[Todo](tag, "todo") {
