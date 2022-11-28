@@ -6,7 +6,7 @@ import javax.inject.Singleton
 import models.todo.TodoList
 import play.api.db.slick.DatabaseConfigProvider
 import play.api.db.slick.HasDatabaseConfigProvider
-import slick.jdbc.JdbcProfile
+import slick.jdbc.PostgresProfile
 
 import scala.concurrent.ExecutionContext
 import scala.concurrent.Future
@@ -14,7 +14,7 @@ import scala.concurrent.Future
 @Singleton
 class TodoListRepository @Inject() (protected val dbConfigProvider: DatabaseConfigProvider)(implicit
     ec: ExecutionContext
-) extends HasDatabaseConfigProvider[JdbcProfile]
+) extends HasDatabaseConfigProvider[PostgresProfile]
     with TodoListComponent {
 
   import profile.api._

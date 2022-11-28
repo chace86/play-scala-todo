@@ -2,9 +2,9 @@ package repositories.todo
 
 import models.todo.TodoList
 import play.api.db.slick.HasDatabaseConfigProvider
-import slick.jdbc.JdbcProfile
+import slick.jdbc.PostgresProfile
 
-trait TodoListComponent { self: HasDatabaseConfigProvider[JdbcProfile] =>
+trait TodoListComponent { self: HasDatabaseConfigProvider[PostgresProfile] =>
   import profile.api._
 
   class TodoListTable(tag: Tag) extends Table[TodoList](tag, "todo_list") {
