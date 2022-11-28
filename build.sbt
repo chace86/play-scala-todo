@@ -10,7 +10,11 @@ lazy val root = (project in file(".")).enablePlugins(PlayScala, SwaggerPlugin, A
 
 scalaVersion := "2.12.15"
 
-libraryDependencies ++= Dependencies.database ++ Dependencies.swagger ++ Dependencies.test :+ guice
+libraryDependencies ++= Dependencies.play ++
+  Dependencies.database ++
+  Dependencies.swagger ++
+  Dependencies.test :+
+  guice
 
 // Play Swagger
 swaggerPrettyJson       := true

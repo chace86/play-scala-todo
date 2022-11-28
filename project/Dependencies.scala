@@ -20,11 +20,12 @@ object Library {
 
 object Dependencies {
 
-  val database: Seq[ModuleID] = Seq(
+  val play: Seq[ModuleID] = Seq(
     Library.PlaySlick,
-    Library.FlywayPlay,
-    Library.H2
+    Library.FlywayPlay
   )
+
+  val database: Seq[ModuleID] = Seq(Library.H2)
 
   val swagger: Seq[ModuleID] = Seq(Library.SwaggerWebjar)
 
