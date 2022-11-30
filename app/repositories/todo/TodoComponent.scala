@@ -7,7 +7,9 @@ import slick.jdbc.PostgresProfile
 trait TodoComponent { self: HasDatabaseConfigProvider[PostgresProfile] with TodoListComponent =>
   import profile.api._
 
-  val CompletedDefault = false
+  protected val CompletedDefault = false
+
+  protected val todos = TableQuery[TodoTable]
 
   class TodoTable(tag: Tag) extends Table[Todo](tag, "todo") {
 
@@ -24,6 +26,4 @@ trait TodoComponent { self: HasDatabaseConfigProvider[PostgresProfile] with Todo
       onDelete = ForeignKeyAction.Cascade
     )
   }
-
-  val todos = TableQuery[TodoTable]
 }

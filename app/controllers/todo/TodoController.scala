@@ -45,13 +45,24 @@ class TodoController @Inject() (repository: TodoRepository, cc: ControllerCompon
   }
 
   def findById(id: Long): Action[AnyContent] = Action.async {
-    repository.findById(id).map {
-      case Some(todo) => Ok(Json.toJson(todo))
-      case None       => NotFound(Json.toJson(ErrorResponse(s"ID $id not found")))
-    }.recover { case ex =>
-      logger.error(s"Failed to get todo ID $id", ex)
-      InternalServerError(Json.toJson(ErrorResponse(s"Failed to get resource with ID $id")))
-    }
+    repository.findById(id)
+      .map {
+        case Some(todo) => Ok(Json.toJson(todo))
+        case None       => NotFound(Json.toJson(ErrorResponse(s"ID $id not found")))
+      }
+      .recover { case ex =>
+        logger.error(s"Failed to get todo ID $id", ex)
+        InternalServerError(Json.toJson(ErrorResponse(s"Failed to get resource with ID $id")))
+      }
+  }
+  // TODO: add pagination
+  def findAllByListId(todoListId: Long): Action[AnyContent] = Action.async {
+    repository.findAllByListId(todoListId)
+      .map(todos => Ok(Json.toJson(todos)))
+      .recover { case ex =>
+        logger.error(s"Failed to get todos by todo list ID $todoListId", ex)
+        InternalServerError(Json.toJson(ErrorResponse(s"Failed to get resource with ID $todoListId")))
+      }
   }
 
   def delete(id: Long): Action[AnyContent] = Action.async {

@@ -3,7 +3,6 @@ package controllers.todo
 import models.todo.Todo
 import org.scalamock.scalatest.MockFactory
 import org.scalatestplus.play._
-import play.api.http.Status.CREATED
 import play.api.libs.json.Json
 import play.api.test.Helpers._
 import play.api.test._
@@ -23,69 +22,69 @@ class TodoControllerSpec extends PlaySpec with MockFactory {
   private val repository = mock[TodoRepository]
   private val controller = new TodoController(repository, Helpers.stubControllerComponents())
 
-  "GET /todo" should {
+  s"GET $path" should {
+
+    val request = FakeRequest(GET, path)
 
     "return 200 and todo for valid id" in {
       (repository.findById _).expects(id)
         .returning(Future.successful(Some(todo)))
 
-      val result = controller.findById(id).apply(FakeRequest(GET, path))
-      status(result) must equal(OK)
-      contentAsJson(result) must equal(Json.toJson(todo))
+      val result = controller.findById(id).apply(request)
+      status(result) must be(OK)
+      contentAsJson(result) must be(Json.toJson(todo))
     }
 
     "return 404 if id does not exist" in {
-      (repository.findById _).expects(2)
+      (repository.findById _).expects(id)
         .returning(Future.successful(None))
 
-      val result = controller.findById(2).apply(FakeRequest(GET, path))
-      status(result) must equal(NOT_FOUND)
+      val result = controller.findById(id).apply(request)
+      status(result) must be(NOT_FOUND)
     }
 
     "return 500 if data source fails" in {
       (repository.findById _).expects(id)
         .returning(Future.failed(new Exception("Test failure")))
 
-      val result = controller.findById(id).apply(FakeRequest(GET, path))
-      status(result) must equal(INTERNAL_SERVER_ERROR)
+      val result = controller.findById(id).apply(request)
+      status(result) must be(INTERNAL_SERVER_ERROR)
     }
   }
 
-  "POST /todo" should {
+  s"POST $path" should {
+
+    val request = FakeRequest(POST, path)
 
     "return 201 when todo is created" in {
       (repository.create _).expects(newTodo)
         .returning(Future.successful(1))
 
-      val result = controller.create.apply(
-        FakeRequest(POST, path)
-          .withBody(Json.toJson(newTodo))
-      )
+      val result = controller.create.apply(request.withBody(Json.toJson(newTodo)))
 
-      status(result) must equal(CREATED)
-      contentAsString(result) must equal(s"$path/$id")
+      status(result) must be(CREATED)
+      contentAsString(result) must be(s"$path/$id")
     }
 
     "return 500 if data source fails" in {
       (repository.create _).expects(*)
         .returning(Future.failed(new Exception("Test failure")))
 
-      val result = controller.create().apply(
-        FakeRequest(POST, path)
-          .withBody(Json.toJson(todo))
-      )
+      val result = controller.create().apply(request.withBody(Json.toJson(todo)))
 
       status(result) must be(INTERNAL_SERVER_ERROR)
     }
   }
 
-  "PUT /todo" should {
+  s"PUT $path" should {
+
+    val request = FakeRequest(PUT, path)
 
     "return 200 if todo updated" in {
       (repository.update _).expects(id, Some("test"), Some(false))
         .returning(Future.successful(1))
 
-      val result = controller.update(id, Some("test"), Some(false)).apply(FakeRequest(PUT, path))
+      val result = controller.update(id, Some("test"), Some(false)).apply(request)
       status(result) must be(OK)
     }
 
@@ -93,7 +92,7 @@ class TodoControllerSpec extends PlaySpec with MockFactory {
       (repository.update _).expects(2, Some("test"), Some(false))
         .returning(Future.successful(0))
 
-      val result = controller.update(2, Some("test"), Some(false)).apply(FakeRequest(PUT, path))
+      val result = controller.update(2, Some("test"), Some(false)).apply(request)
       status(result) must be(NOT_FOUND)
     }
 
@@ -101,18 +100,20 @@ class TodoControllerSpec extends PlaySpec with MockFactory {
       (repository.update _).expects(id, Some("test"), Some(false))
         .returning(Future.failed(new Exception("Test failure")))
 
-      val result = controller.update(id, Some("test"), Some(false)).apply(FakeRequest(PUT, path))
+      val result = controller.update(id, Some("test"), Some(false)).apply(request)
       status(result) must be(INTERNAL_SERVER_ERROR)
     }
   }
 
-  "DELETE /todo" should {
+  s"DELETE $path" should {
+
+    val request = FakeRequest(DELETE, path)
 
     "return 200 if rows are deleted" in {
       (repository.delete _).expects(id)
         .returning(Future.successful(1))
 
-      val result = controller.delete(id).apply(FakeRequest(DELETE, path))
+      val result = controller.delete(id).apply(request)
       status(result) must be(OK)
     }
 
@@ -120,7 +121,7 @@ class TodoControllerSpec extends PlaySpec with MockFactory {
       (repository.delete _).expects(2)
         .returning(Future.successful(0))
 
-      val result = controller.delete(2).apply(FakeRequest(DELETE, path))
+      val result = controller.delete(2).apply(request)
       status(result) must be(NOT_FOUND)
     }
 
@@ -128,7 +129,7 @@ class TodoControllerSpec extends PlaySpec with MockFactory {
       (repository.delete _).expects(id)
         .returning(Future.failed(new Exception("Test failure")))
 
-      val result = controller.delete(id).apply(FakeRequest(DELETE, path))
+      val result = controller.delete(id).apply(request)
       status(result) must be(INTERNAL_SERVER_ERROR)
     }
   }

@@ -50,8 +50,27 @@ class TodoRepository @Inject() (protected val dbConfigProvider: DatabaseConfigPr
     db.run(updateAction)
   }
 
-  def findById(id: Long): Future[Option[Todo]] = db.run(todos.filter(_.id === id).result.headOption)
+  def findById(id: Long): Future[Option[Todo]] =
+    db.run(
+      todos
+        .filter(_.id === id)
+        .result
+        .headOption
+    )
+
+  def findAllByListId(todoListId: Long): Future[Set[Todo]] =
+    db.run(
+      todos
+        .filter(_.todoListId === todoListId)
+        .result
+        .map(_.toSet)
+    )
 
   // return number of rows deleted
-  def delete(id: Long): Future[Int] = db.run(todos.filter(_.id === id).delete)
+  def delete(id: Long): Future[Int] =
+    db.run(
+      todos
+        .filter(_.id === id)
+        .delete
+    )
 }

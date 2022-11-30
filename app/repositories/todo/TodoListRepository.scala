@@ -19,11 +19,32 @@ class TodoListRepository @Inject() (protected val dbConfigProvider: DatabaseConf
 
   import profile.api._
 
-  def create(title: String): Future[Long] = db.run {
-    todoLists
-      .map(_.title)
-      .returning(todoLists.map(_.id))
-      .into((data, id) => TodoList(id, data)) += title
-  }.map(_.id)
+  def create(title: String): Future[Long] =
+    db.run(
+      todoLists
+        .map(_.title)
+        .returning(todoLists.map(_.id)) += title
+    )
 
+  def update(id: Long, title: String): Future[Int] =
+    db.run(
+      todoLists
+        .filter(_.id === id)
+        .map(_.title)
+        .update(title)
+    )
+
+  def findById(id: Long): Future[Option[TodoList]] =
+    db.run(
+      todoLists
+        .filter(_.id === id)
+        .result.headOption
+    )
+
+  def delete(id: Long): Future[Int] =
+    db.run(
+      todoLists
+        .filter(_.id === id)
+        .delete
+    )
 }

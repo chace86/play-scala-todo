@@ -16,3 +16,39 @@
 #     $ref: '#/responses/InternalServerError'
 ###
 POST /todo/list controllers.todo.TodoListController.create(title: String)
+
+###
+# responses:
+#   200:
+#     $ref: '#/responses/OkResponse'
+#   404:
+#     $ref: '#/responses/NotFound'
+#   500:
+#     $ref: '#/responses/InternalServerError'
+###
+PUT /todo/list/:id controllers.todo.TodoListController.update(id: Long, title: String)
+
+###
+# responses:
+#   200:
+#     $ref: '#/responses/OkResponse'
+#   404:
+#     $ref: '#/responses/NotFound'
+#   500:
+#     $ref: '#/responses/InternalServerError'
+###
+DELETE /todo/list/:id controllers.todo.TodoListController.delete(id: Long)
+
+###
+# responses:
+#   200:
+#     content:
+#       application/json:
+#         schema:
+#           $ref: '#/components/schemas/models.todo.TodoList'
+#   404:
+#     $ref: '#/responses/NotFound'
+#   500:
+#     $ref: '#/responses/InternalServerError'
+###
+GET /todo/list/:id controllers.todo.TodoListController.findById(id: Long)

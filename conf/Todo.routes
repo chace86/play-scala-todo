@@ -37,6 +37,17 @@ PUT /todo/:id controllers.todo.TodoController.update(id: Long, description: Opti
 ###
 # responses:
 #   200:
+#     $ref: '#/responses/OkResponse'
+#   404:
+#     $ref: '#/responses/NotFound'
+#   500:
+#     $ref: '#/responses/InternalServerError'
+###
+DELETE /todo/:id controllers.todo.TodoController.delete(id: Long)
+
+###
+# responses:
+#   200:
 #     content:
 #       application/json:
 #         schema:
@@ -51,13 +62,18 @@ GET /todo/:id controllers.todo.TodoController.findById(id: Long)
 ###
 # responses:
 #   200:
-#     $ref: '#/responses/OkResponse'
+#     content:
+#       application/json:
+#         schema:
+#           type: array
+#           items:
+#             $ref: '#/components/schemas/models.todo.Todo'
 #   404:
 #     $ref: '#/responses/NotFound'
 #   500:
 #     $ref: '#/responses/InternalServerError'
 ###
-DELETE /todo/:id controllers.todo.TodoController.delete(id: Long)
+GET /todos/:todoListId controllers.todo.TodoController.findAllByListId(todoListId: Long)
 
 # Example routes
 
