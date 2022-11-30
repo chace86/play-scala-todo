@@ -52,6 +52,39 @@ class TodoControllerSpec extends PlaySpec with MockFactory {
     }
   }
 
+  "GET /todos" should {
+
+    val request = FakeRequest(GET, "/todos")
+
+    "return 200 and list of todos with valid id" in {
+      val todos = Set(todo)
+      (repository.findAllByListId _).expects(id)
+        .returning(Future.successful(todos))
+
+      val result = controller.findAllByListId(id).apply(request)
+      status(result) must be(OK)
+      contentAsJson(result).as[Set[Todo]] must be(todos)
+    }
+
+    "return 200 empty list when given invalid id" in {
+      val emptyList = Set.empty[Todo]
+      (repository.findAllByListId _).expects(id)
+        .returning(Future.successful(emptyList))
+
+      val result = controller.findAllByListId(id).apply(request)
+      status(result) must be(OK)
+      contentAsJson(result).as[Set[Todo]] must be(empty)
+    }
+
+    "return 500 when data source fails" in {
+      (repository.findAllByListId _).expects(id)
+        .returning(Future.failed(new Exception("Test failure")))
+
+      val result = controller.findAllByListId(id).apply(request)
+      status(result) must be(INTERNAL_SERVER_ERROR)
+    }
+  }
+
   s"POST $path" should {
 
     val request = FakeRequest(POST, path)

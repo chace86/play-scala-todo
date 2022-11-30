@@ -29,6 +29,23 @@ class TodoFunSpec extends PlaySpec with GuiceOneAppPerSuite {
     }
   }
 
+  "GET /todos" should {
+
+    val path = "/todos"
+
+    "return 200 and list of todos for valid id" in {
+      val result = route(app, FakeRequest(GET, s"$path/1")).get
+      status(result) must be(OK)
+      contentAsJson(result).as[Set[Todo]] must not be empty
+    }
+
+    "return 200 and empty list of todos for invalid id" in {
+      val result = route(app, FakeRequest(GET, s"$path/123")).get
+      status(result) must be(OK)
+      contentAsJson(result).as[Set[Todo]] must be(empty)
+    }
+  }
+
   s"POST $path" should {
 
     "return 201 for newly created todo" in {
