@@ -4,9 +4,9 @@ import models.todo.TodoList
 import org.scalamock.scalatest.MockFactory
 import org.scalatestplus.play.PlaySpec
 import play.api.libs.json.Json
-import play.api.test.Helpers._
 import play.api.test.FakeRequest
 import play.api.test.Helpers
+import play.api.test.Helpers._
 import repositories.todo.TodoListRepository
 
 import scala.concurrent.ExecutionContext.Implicits.global
