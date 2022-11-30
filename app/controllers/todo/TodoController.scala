@@ -19,6 +19,8 @@ class TodoController @Inject() (repository: TodoRepository, cc: ControllerCompon
     extends AbstractController(cc)
     with Logging {
 
+  private val AllowedUpdateKeys = Set("description", "isCompleted")
+
   def create: Action[JsValue] = Action(parse.json).async { request =>
     request.body.validate[Todo]
       .map(
@@ -33,15 +35,20 @@ class TodoController @Inject() (repository: TodoRepository, cc: ControllerCompon
   }
 
   def update(id: Long, description: Option[String], isCompleted: Option[Boolean]): Action[AnyContent] = Action.async {
-    repository.update(id, description, isCompleted)
-      .map(n =>
-        if (n > 0) Ok(Json.toJson(MessageResponse(s"Updated $n rows")))
-        else NotFound(Json.toJson(ErrorResponse(s"ID $id not found")))
-      )
-      .recover { case ex =>
-        logger.error(s"Failed to update todo with ID $id", ex)
-        InternalServerError(Json.toJson(ErrorResponse(s"Failed to update resource with ID $id")))
-      }
+
+    if (description.isEmpty && isCompleted.isEmpty)
+      Future.successful(BadRequest(Json.toJson(ErrorResponse("At least one query parameter required"))))
+    else {
+      repository.update(id, description, isCompleted)
+        .map(n =>
+          if (n > 0) Ok(Json.toJson(MessageResponse(s"Updated $n rows")))
+          else NotFound(Json.toJson(ErrorResponse(s"ID $id not found")))
+        )
+        .recover { case ex =>
+          logger.error(s"Failed to update todo with ID $id", ex)
+          InternalServerError(Json.toJson(ErrorResponse(s"Failed to update resource with ID $id")))
+        }
+    }
   }
 
   def findById(id: Long): Action[AnyContent] = Action.async {

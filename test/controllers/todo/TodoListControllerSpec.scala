@@ -83,6 +83,7 @@ class TodoListControllerSpec extends PlaySpec with MockFactory {
 
       val result = controller.findById(id).apply(request)
       status(result) must be(OK)
+      contentAsJson(result).as[TodoList] must be(list)
     }
 
     "return 404 if id does not exist" in {
