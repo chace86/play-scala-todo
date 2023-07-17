@@ -1,9 +1,23 @@
-logs
-target
-/.bsp
-/.idea
-/.idea_modules
-/.classpath
-/.project
-/.settings
-/RUNNING_PID
+logs/
+
+# sbt specific
+.cache
+.history
+.lib/
+dist/*
+target/
+lib_managed/
+src_managed/
+project/boot/
+project/plugins/project/
+
+# Scala-IDE specific
+.scala_dependencies
+.worksheet
+.idea
+*.iml
+.metals/
+project/metals.sbt
+project/project/
+.bloop/
+.DS_Store
