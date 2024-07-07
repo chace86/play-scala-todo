@@ -40,6 +40,7 @@ Example Scala Play "todo list" application. Postgres will be used as the databas
 ### Development
 
 - [x] Scalafmt
+- [ ] Revise Scalafmt, integrate with vscode
 - [ ] Dependency bot (GitHub or Scala Steward?)
 - [ ] Add GitHub CI/CD, tags, etc.
 
