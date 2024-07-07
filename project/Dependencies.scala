@@ -1,12 +1,12 @@
 import sbt._
 
 object Version {
-  val PlaySlick     = "5.0.0"
-  val FlywayPlay    = "7.20.0"
-  val H2            = "2.1.210"
+  val PlaySlick     = "5.3.1"
+  val FlywayPlay    = "8.0.1"
+  val H2            = "2.1.214"
   val SwaggerWebjar = "5.10.3"
-  val ScalaTest     = "5.1.0"
-  val ScalaMock     = "5.2.0"
+  val ScalaTest     = "6.0.0"
+  val ScalaMock     = "6.0.0"
 }
 
 object Library {

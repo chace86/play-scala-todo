@@ -82,9 +82,10 @@ To run image locally:
 
 ## Resources
 
-- [Play Swagger](https://github.com/play-swagger/play-swagger)
-- [Play Documentation](https://www.playframework.com/documentation/2.9.x/Home)
+- [Play](https://www.playframework.com/documentation/2.9.x/Home)
+- [Play Slick](https://github.com/playframework/play-slick) and [Slick 3](https://scala-slick.org/doc/stable/)
+- [Flyway Play](https://github.com/flyway/flyway-play)
+- [Play Swagger](https://github.com/play-swagger/play-swagger) and [OpenAPI/Swagger Specification](https://swagger.io/specification/)
 - [Play Samples](https://github.com/playframework/play-samples) - REST, Slick, etc.
-- [Slick 3](https://scala-slick.org/doc/stable/)
 - [SBT Native Packager](https://sbt-native-packager.readthedocs.io/en/latest/index.html)
-- [OpenAPI/Swagger Specification](https://swagger.io/specification/)
+- [ScalaTest](https://www.scalatest.org/) and [ScalaMock](https://scalamock.org/)
