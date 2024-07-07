@@ -1,6 +1,7 @@
 package controllers.todo
 
 import javax.inject._
+import java.sql.SQLIntegrityConstraintViolationException
 
 import models.response.ErrorResponse
 import models.response.MessageResponse
@@ -26,9 +27,12 @@ class TodoController @Inject() (repository: TodoRepository, cc: ControllerCompon
       .map(
         repository.create(_)
           .map(id => Created(request.path + s"/$id"))
-          .recover { case ex =>
-            logger.error("Failed to create resource", ex)
-            InternalServerError(Json.toJson(ErrorResponse("Failed to create resource")))
+          .recover {
+            case sqlConstraintViolation: SQLIntegrityConstraintViolationException =>
+              UnprocessableEntity(Json.toJson(ErrorResponse("Unable to process entity")))
+            case ex =>
+              logger.error("Failed to create resource", ex)
+              InternalServerError(Json.toJson(ErrorResponse("Failed to create resource")))
           }
       )
       .recoverTotal(error => Future.successful(BadRequest(JsError.toJson(error))))

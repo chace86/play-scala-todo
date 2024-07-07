@@ -57,7 +57,7 @@ To run locally:
 
 `sbt run`
 
-Use `CTRL + D` to stop application
+Use `Enter` or `CTRL + D` to stop application
 
 ### Docker
 
