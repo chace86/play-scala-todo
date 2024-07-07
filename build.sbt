@@ -8,7 +8,7 @@ version := "1.0.0-SNAPSHOT"
 
 lazy val root = (project in file(".")).enablePlugins(PlayScala, SwaggerPlugin, AshScriptPlugin)
 
-scalaVersion := "2.12.15"
+scalaVersion := "2.13.14"
 
 libraryDependencies ++= Dependencies.play ++
   Dependencies.database ++
@@ -24,5 +24,5 @@ swaggerDomainNameSpaces := Seq("models")
 // SBT Native Packager
 dockerChmodType          := DockerChmodType.UserGroupWriteExecute
 dockerPermissionStrategy := DockerPermissionStrategy.CopyChown
-dockerBaseImage          := "openjdk:8-jre-alpine"
+dockerBaseImage          := "eclipse-temurin:11-jre-alpine"
 dockerUpdateLatest       := true
