@@ -22,8 +22,8 @@ Example Scala Play "todo list" application. Postgres will be used as the databas
 - [x] Swagger/OpenAPI
 - [ ] Pagination API example?
 - [x] Enum rendered in Swagger?
-- [ ] Update to Scala 2.13
-- [ ] Update sbt version
+- [x] Update to Scala 2.13
+- [x] Update sbt version
 - [ ] JVM tuning and other java options?
 
 ### Database
@@ -40,7 +40,7 @@ Example Scala Play "todo list" application. Postgres will be used as the databas
 ### Development
 
 - [x] Scalafmt
-- [ ] Scala Steward - update dependencies
+- [ ] Dependency bot (GitHub or Scala Steward?)
 - [ ] Add GitHub CI/CD, tags, etc.
 
 ### Deployment
