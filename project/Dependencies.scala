@@ -4,7 +4,7 @@ object Version {
   val PlaySlick     = "5.0.0"
   val FlywayPlay    = "7.20.0"
   val H2            = "2.1.210"
-  val SwaggerWebjar = "4.14.0"
+  val SwaggerWebjar = "5.10.3"
   val ScalaTest     = "5.1.0"
   val ScalaMock     = "5.2.0"
 }

@@ -82,8 +82,8 @@ To run image locally:
 
 ## Resources
 
-- [Play Swagger](https://github.com/iheartradio/play-swagger)
-- [Play Logging](https://www.playframework.com/documentation/latest/SettingsLogger)
+- [Play Swagger](https://github.com/play-swagger/play-swagger)
+- [Play Documentation](https://www.playframework.com/documentation/2.9.x/Home)
 - [Play Samples](https://github.com/playframework/play-samples) - REST, Slick, etc.
 - [Slick 3](https://scala-slick.org/doc/stable/)
 - [SBT Native Packager](https://sbt-native-packager.readthedocs.io/en/latest/index.html)
