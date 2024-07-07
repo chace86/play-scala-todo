@@ -10,6 +10,7 @@ import repositories.todo.TodoRepository
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
+import java.sql.SQLIntegrityConstraintViolationException
 
 // https://www.playframework.com/documentation/latest/ScalaTestingWithScalaTest
 class TodoControllerSpec extends PlaySpec with MockFactory {
@@ -97,6 +98,15 @@ class TodoControllerSpec extends PlaySpec with MockFactory {
 
       status(result) must be(CREATED)
       contentAsString(result) must be(s"$path/$id")
+    }
+
+    "return 422 unprocessable entity when no todo list exists for a todo" in {
+      (repository.create _).expects(*)
+        .returning(Future.failed(new SQLIntegrityConstraintViolationException()))
+      
+      val result = controller.create().apply(request.withBody(Json.toJson(todo)))
+
+      status(result) must be(UNPROCESSABLE_ENTITY)
     }
 
     "return 500 if data source fails" in {
