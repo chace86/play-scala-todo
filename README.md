@@ -89,3 +89,4 @@ To run image locally:
 - [Play Samples](https://github.com/playframework/play-samples) - REST, Slick, etc.
 - [SBT Native Packager](https://sbt-native-packager.readthedocs.io/en/latest/index.html)
 - [ScalaTest](https://www.scalatest.org/) and [ScalaMock](https://scalamock.org/)
+- [Scalafmt](https://scalameta.org/scalafmt/docs/configuration.html)
