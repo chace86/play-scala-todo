@@ -1,7 +1,6 @@
 package user
 
 import play.api.mvc._
-import play.api.mvc.Results.Unauthorized
 import com.google.inject.Inject
 import scala.concurrent.ExecutionContext
 import scala.concurrent.Future
@@ -12,6 +11,6 @@ class UserAction @Inject() (val parser: BodyParsers.Default)(implicit val execut
   extends ActionBuilder[UserRequest, AnyContent]
   with ActionTransformer[Request, UserRequest] {
   
-  def transform[A](request: Request[A]) =
+  def transform[A](request: Request[A]): Future[UserRequest[A]] =
     Future.successful(new UserRequest(request.session.get("username"), request))
 }
